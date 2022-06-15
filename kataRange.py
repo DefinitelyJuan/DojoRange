@@ -1,23 +1,27 @@
 class rango:
-    def contains(firstRange:tuple, secondRange:tuple, number1:int,number2:int):
+    def contains(firstRange:tuple, secondRange:tuple, numbers: list):
         if (firstRange[1] and secondRange[1] == False): #si es inclusivo "["
-                if (firstRange[0]<= number1 and secondRange[0] > number2):
+            for num in numbers:
+                if (firstRange[0]<= num and secondRange[0] > num):
                     return True
                 else:
                     return False
                 
         if (firstRange[1] and secondRange[1] == True): #si es inclusivo "["
-                if (firstRange[0]<= number1 and secondRange[0] >= number2):
+            for num in numbers:
+                if (firstRange[0]<= num and secondRange[0] >= num):
                     return True
                 else:
                     return False                    
         if (firstRange[1] == False and secondRange[1] == True): #si es inclusivo "["
-                if (firstRange[0]< number1 and secondRange[0] >= number2):
+            for num in numbers:    
+                if (firstRange[0]< num and secondRange[0] >= num):
                     return True    
                 else:
                     return False                                    
         if (firstRange[1] == False and secondRange[1] == False): #si es inclusivo "["
-                if (firstRange[0]< number1 and secondRange[0] > number2):
+            for num in numbers: 
+                if (firstRange[0]< num and secondRange[0] > num):
                     return True  
                 else:
                     return False                              
