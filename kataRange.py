@@ -117,9 +117,9 @@ class rango:
         if(not secondRange[1]):
             fourthRange[0] -= 1
      
-        
-        overlapset = set(range(firstRange[0], secondRange[0]))
-        if (len(overlapset.intersection)(range(thirdRange[0], fourthRange[0]))>0):
+        #2,8-1
+        overlapset = set(range(firstRange[0], secondRange[0]+1))
+        if (len(overlapset.intersection(range(thirdRange[0], fourthRange[0]+1)))>0):
             return True 
         else:
             return False
