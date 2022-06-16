@@ -73,10 +73,12 @@ class rango:
         return endpoint
     def containsRange(firstRange:tuple, secondRange:tuple, thirdRange:list, fourthRange:list):
         
-        if(thirdRange[1]):
+
+        if(not thirdRange[1]):
             thirdRange[0] += 1
-        if(fourthRange[1]):
+        if(not fourthRange[1]):
             fourthRange[0] -= 1
+
 
 
         if (firstRange[1] and secondRange[1] == False): #[)
@@ -102,3 +104,25 @@ class rango:
                 return False                              
         else:
             return False
+    
+    def overlapsRange(firstRange:list, secondRange:list, thirdRange: list, fourthRange:list): 
+        
+        if(not thirdRange[1]):
+            thirdRange[0] += 1
+        if(not fourthRange[1]):
+            fourthRange[0] -= 1
+        
+        if(not firstRange[1]):
+            thirdRange[0] += 1
+        if(not secondRange[1]):
+            fourthRange[0] -= 1
+     
+        
+        overlapset = set(range(firstRange[0], secondRange[0]))
+        if (len(overlapset.intersection)(range(thirdRange[0], fourthRange[0]))>0):
+            return True 
+        else:
+            return False
+
+
+

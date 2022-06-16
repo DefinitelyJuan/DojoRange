@@ -17,5 +17,8 @@ class testCases(unittest.TestCase):
         self.assertEqual(rango.containsRange((2,True),(5,False),[7,True],[10,False]), False)
         self.assertEqual(rango.containsRange((2,True),(5,False),[3,True],[5,False]), False)
         self.assertEqual(rango.containsRange((2,True),(5,False),[2,True],[10,False]), False)
-
-
+        self.assertEqual(rango.containsRange((2,True),(10,False),[3,True],[5,True]), True)
+        self.assertEqual(rango.containsRange((3,True),(5,True),[3,True],[5,True]), True)
+    def test_overlapsRange(self):
+        self.assertEqual(rango.containsRange([2,True],[5,False],[7,True],[10,False]), False)
+        
