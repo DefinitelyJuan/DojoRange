@@ -1,11 +1,12 @@
-
+from __future__ import annotations
+from ast import comprehension
 class rango:
     def __init__(self, strRange:str):
         try:
-            self.lNumber = strRange[1:strRange.find(",")]
+            self.lNumber = int(strRange[1:strRange.find(",")])
             self.lInclusive = True if strRange[0] == "[" else False
-            self.rNumber = strRange[strRange.find(",")+1:-1]
-            self.rInclusive= True if strRange[-1] == "[" else False
+            self.rNumber = int(strRange[strRange.find(",")+1:-1])
+            self.rInclusive= True if strRange[-1] == "]" else False
 
         except:
             raise Exception("Invalid String. May have invalid format, should be like this: [1,5)")
@@ -59,8 +60,8 @@ class rango:
                             
         return numbers
 
-    def equals(firstRange:tuple, secondRange:tuple, thirdRange:tuple, fourthRange:tuple):
-        if(firstRange == thirdRange and secondRange == fourthRange):
+    def equals(self, compRange: rango):
+        if(self.__dict__==compRange.__dict__):
             return True
         else:
             return False
@@ -79,55 +80,55 @@ class rango:
         if (self.lInclusive == False and self.rInclusive == False): 
             endpoint = (self.lNumber+1, self.rNumber-1)
         return endpoint
-    def containsRange(firstRange:tuple, secondRange:tuple, thirdRange:list, fourthRange:list):
+    
+    def containsRange(self, compRange:rango):
         
 
-        if(not thirdRange[1]):
-            thirdRange[0] += 1
-        if(not fourthRange[1]):
-            fourthRange[0] -= 1
+        if(not compRange.lInclusive):
+            compRange.lNumber += 1
+        if(not compRange.rInclusive):
+            compRange.rNumber -= 1
 
 
 
         if (self.lInclusive and self.rInclusive == False): #[)
-            if ((self.lNumber<= thirdRange[0] and self.rNumber > thirdRange[0]) and (self.lNumber<= fourthRange[0] and self.rNumber > fourthRange[0])):
+            if ((self.lNumber<= compRange.lNumber and self.rNumber > compRange.lNumber) and (self.lNumber<= compRange.rNumber and self.rNumber > compRange.rNumber)):
                 return True
             else:
                 return False
                 
         if (self.lInclusive and self.rInclusive == True): #[]
-            if ((self.lNumber<= thirdRange[0] and self.rNumber >= thirdRange[0]) and (self.lNumber<= fourthRange[0] and self.rNumber >= fourthRange[0])):
+            if ((self.lNumber<= compRange.lNumber and self.rNumber >= compRange.lNumber) and (self.lNumber<= compRange.rNumber and self.rNumber >= compRange.rNumber)):
                 return True
             else:
                 return False                    
         if (self.lInclusive == False and self.rInclusive == True):#(]
-            if ((self.lNumber< thirdRange[0] and self.rNumber >= thirdRange[0]) and (self.lNumber< fourthRange[0] and self.rNumber >= fourthRange[0])):
+            if ((self.lNumber< compRange.lNumber and self.rNumber >= compRange.lNumber) and (self.lNumber< compRange.rNumber and self.rNumber >= compRange.rNumber)):
                 return True    
             else:
                 return False                                    
         if (self.lInclusive == False and self.rInclusive == False):#()
-            if ((self.lNumber< thirdRange[0] and self.rNumber > thirdRange[0]) and (self.lNumber< fourthRange[0] and self.rNumber > fourthRange[0])):
+            if ((self.lNumber< compRange.lNumber and self.rNumber > compRange.lNumber) and (self.lNumber< compRange.rNumber and self.rNumber > compRange.rNumber)):
                 return True  
             else:
                 return False                              
         else:
             return False
     
-    def overlapsRange(firstRange:list, secondRange:list, thirdRange: list, fourthRange:list): 
+    def overlapsRange(self, compRange: rango): 
         
-        if(not thirdRange[1]):
-            thirdRange[0] += 1
-        if(not fourthRange[1]):
-            fourthRange[0] -= 1
+        if(not compRange.lInclusive):
+            compRange.lNumber += 1
+        if(not compRange.rInclusive):
+            compRange.rNumber -= 1
         
         if(not self.lInclusive):
-            thirdRange[0] += 1
+            self.lNumber += 1
         if(not self.rInclusive):
-            fourthRange[0] -= 1
-     
-        #2,8-1
+            self.rNumber -= 1
+            
         overlapset = set(range(self.lNumber, self.rNumber+1))
-        if (len(overlapset.intersection(range(thirdRange[0], fourthRange[0]+1)))>0):
+        if (len(overlapset.intersection(range(compRange.lNumber, compRange.rNumber+1)))>0):
             return True 
         else:
             return False
