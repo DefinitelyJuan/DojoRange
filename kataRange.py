@@ -1,7 +1,11 @@
-from array import array
-
 
 class rango:
+    def __init__(self, strRange:str):
+        try:
+            self.lNumber = strRange[1:strRange.find(",")]#[1,2]
+            self.lInclusive = True if strRange[0] == "[" else False
+        except:
+            raise Exception("Invalid String. May have invalid format, should be like this: [1,5)")
     def contains(firstRange:tuple, secondRange:tuple, numbers: list):
         if (firstRange[1] and secondRange[1] == False): #si es inclusivo "["
             for num in numbers:
