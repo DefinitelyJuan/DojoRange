@@ -2,55 +2,59 @@
 class rango:
     def __init__(self, strRange:str):
         try:
-            self.lNumber = strRange[1:strRange.find(",")]#[1,2]
+            self.lNumber = strRange[1:strRange.find(",")]
             self.lInclusive = True if strRange[0] == "[" else False
+            self.rNumber = strRange[strRange.find(",")+1:-1]
+            self.rInclusive= True if strRange[-1] == "[" else False
+
         except:
             raise Exception("Invalid String. May have invalid format, should be like this: [1,5)")
-    def contains(firstRange:tuple, secondRange:tuple, numbers: list):
-        if (firstRange[1] and secondRange[1] == False): #si es inclusivo "["
+        assert self.lNumber <= self.rNumber, "right number should be greater than left"
+    def contains(self, numbers: list):
+        if (self.lInclusive and self.rInclusive == False): #si es inclusivo "["
             for num in numbers:
-                if (firstRange[0]<= num and secondRange[0] > num):
+                if (self.lNumber<= num and self.rNumber > num):
                     return True
                 else:
                     return False
                 
-        if (firstRange[1] and secondRange[1] == True): 
+        if (self.lInclusive and self.rInclusive == True): 
             for num in numbers:
-                if (firstRange[0]<= num and secondRange[0] >= num):
+                if (self.lNumber<= num and self.rNumber >= num):
                     return True
                 else:
                     return False                    
-        if (firstRange[1] == False and secondRange[1] == True): 
+        if (self.lInclusive == False and self.rInclusive == True): 
             for num in numbers:    
-                if (firstRange[0]< num and secondRange[0] >= num):
+                if (self.lNumber< num and self.rNumber >= num):
                     return True    
                 else:
                     return False                                    
-        if (firstRange[1] == False and secondRange[1] == False): 
+        if (self.lInclusive == False and self.rInclusive == False): 
             for num in numbers: 
-                if (firstRange[0]< num and secondRange[0] > num):
+                if (self.lNumber< num and self.rNumber > num):
                     return True  
                 else:
                     return False                              
         else:
             return False
 
-    def getAllPoints(firstRange:tuple, secondRange:tuple):
+    def getAllPoints(self):
         numbers = []
-        if (firstRange[1] and secondRange[1] == False): 
-            for i in range(firstRange[0],secondRange[0]):
+        if (self.lInclusive and self.rInclusive == False): 
+            for i in range(self.lNumber,self.rNumber):
                 numbers.append(i)
                 
-        if (firstRange[1] and secondRange[1] == True):
-            for i in range(firstRange[0],secondRange[0]+1):
+        if (self.lInclusive and self.rInclusive == True):
+            for i in range(self.lNumber,self.rNumber+1):
                 numbers.append(i)
                 
-        if (firstRange[1] == False and secondRange[1] == True):
-            for i in range(firstRange[0]+1,secondRange[0]+1):
+        if (self.lInclusive == False and self.rInclusive == True):
+            for i in range(self.lNumber+1,self.rNumber+1):
                 numbers.append(i) 
                                    
-        if (firstRange[1] == False and secondRange[1] == False): 
-            for i in range(firstRange[0]+1,secondRange[0]):
+        if (self.lInclusive == False and self.rInclusive == False): 
+            for i in range(self.lNumber+1,self.rNumber):
                 numbers.append(i)
                             
         return numbers
@@ -61,19 +65,19 @@ class rango:
         else:
             return False
         
-    def endpoints(firstRange:tuple, secondRange:tuple): 
+    def endpoints(self): 
         endpoint = ()
-        if (firstRange[1] and secondRange[1] == False): 
-            endpoint = (firstRange[0], secondRange[0]-1)
+        if (self.lInclusive and self.rInclusive == False): 
+            endpoint = (self.lNumber, self.rNumber-1)
                 
-        if (firstRange[1] and secondRange[1] == True):
-            endpoint = (firstRange[0], secondRange[0])
+        if (self.lInclusive and self.rInclusive == True):
+            endpoint = (self.lNumber, self.rNumber)
                 
-        if (firstRange[1] == False and secondRange[1] == True):
-            endpoint = (firstRange[0]+1, secondRange[0]) 
+        if (self.lInclusive == False and self.rInclusive == True):
+            endpoint = (self.lNumber+1, self.rNumber) 
                                    
-        if (firstRange[1] == False and secondRange[1] == False): 
-            endpoint = (firstRange[0]+1, secondRange[0]-1)
+        if (self.lInclusive == False and self.rInclusive == False): 
+            endpoint = (self.lNumber+1, self.rNumber-1)
         return endpoint
     def containsRange(firstRange:tuple, secondRange:tuple, thirdRange:list, fourthRange:list):
         
@@ -85,24 +89,24 @@ class rango:
 
 
 
-        if (firstRange[1] and secondRange[1] == False): #[)
-            if ((firstRange[0]<= thirdRange[0] and secondRange[0] > thirdRange[0]) and (firstRange[0]<= fourthRange[0] and secondRange[0] > fourthRange[0])):
+        if (self.lInclusive and self.rInclusive == False): #[)
+            if ((self.lNumber<= thirdRange[0] and self.rNumber > thirdRange[0]) and (self.lNumber<= fourthRange[0] and self.rNumber > fourthRange[0])):
                 return True
             else:
                 return False
                 
-        if (firstRange[1] and secondRange[1] == True): #[]
-            if ((firstRange[0]<= thirdRange[0] and secondRange[0] >= thirdRange[0]) and (firstRange[0]<= fourthRange[0] and secondRange[0] >= fourthRange[0])):
+        if (self.lInclusive and self.rInclusive == True): #[]
+            if ((self.lNumber<= thirdRange[0] and self.rNumber >= thirdRange[0]) and (self.lNumber<= fourthRange[0] and self.rNumber >= fourthRange[0])):
                 return True
             else:
                 return False                    
-        if (firstRange[1] == False and secondRange[1] == True):#(]
-            if ((firstRange[0]< thirdRange[0] and secondRange[0] >= thirdRange[0]) and (firstRange[0]< fourthRange[0] and secondRange[0] >= fourthRange[0])):
+        if (self.lInclusive == False and self.rInclusive == True):#(]
+            if ((self.lNumber< thirdRange[0] and self.rNumber >= thirdRange[0]) and (self.lNumber< fourthRange[0] and self.rNumber >= fourthRange[0])):
                 return True    
             else:
                 return False                                    
-        if (firstRange[1] == False and secondRange[1] == False):#()
-            if ((firstRange[0]< thirdRange[0] and secondRange[0] > thirdRange[0]) and (firstRange[0]< fourthRange[0] and secondRange[0] > fourthRange[0])):
+        if (self.lInclusive == False and self.rInclusive == False):#()
+            if ((self.lNumber< thirdRange[0] and self.rNumber > thirdRange[0]) and (self.lNumber< fourthRange[0] and self.rNumber > fourthRange[0])):
                 return True  
             else:
                 return False                              
@@ -116,13 +120,13 @@ class rango:
         if(not fourthRange[1]):
             fourthRange[0] -= 1
         
-        if(not firstRange[1]):
+        if(not self.lInclusive):
             thirdRange[0] += 1
-        if(not secondRange[1]):
+        if(not self.rInclusive):
             fourthRange[0] -= 1
      
         #2,8-1
-        overlapset = set(range(firstRange[0], secondRange[0]+1))
+        overlapset = set(range(self.lNumber, self.rNumber+1))
         if (len(overlapset.intersection(range(thirdRange[0], fourthRange[0]+1)))>0):
             return True 
         else:
