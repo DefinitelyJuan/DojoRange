@@ -127,8 +127,9 @@ class rango:
         if(not self.rInclusive):
             self.rNumber -= 1
             
-        overlapset = set(range(self.lNumber, self.rNumber+1))
-        if (len(overlapset.intersection(range(compRange.lNumber, compRange.rNumber+1)))>0):
+        rOverlap = range(self.lNumber, self.rNumber+1)
+        rComp =range(compRange.lNumber, compRange.rNumber+1)
+        if (rOverlap.start <= rComp.stop and rComp.start <= rOverlap.stop):
             return True 
         else:
             return False
